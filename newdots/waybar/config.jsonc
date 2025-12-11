@@ -1,0 +1,172 @@
+{
+  "layer": "top",
+  "position": "bottom",
+  "height": 38,
+  "spacing": 4,
+  "margin-top": 5,
+  "margin-bottom": 2,
+  "margin-left": 15,
+  "margin-right": 15,
+  "reload_style_on_change": true,
+
+  "modules-left": ["custom/launcher", "custom/chrome", "custom/terminal", "custom/code", "custom/music", "custom/thunar", "custom/todo"],
+  "modules-center": ["wlr/taskbar", "ext/workspaces" ],
+  "modules-right": [ "battery#BAT0", "battery#BAT1", "keyboard-state", "group/group-tools", "pulseaudio", "backlight", "tray", "clock"],
+
+
+  "wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": 20,
+    "icon-theme": "Numix-Circle",
+    "tooltip-format": "{title:.50}",
+    "on-click": "minimize-raise",
+    "on-click-middle": "close",
+    "on-click-right": "fullscreen"
+  },
+
+  "ext/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "urgent": "",
+      "active": "",
+      "default": ""
+    },
+    "sort-by-number": true,
+    "on-click": "activate"
+  },
+
+  "keyboard-state": {
+    "capslock": true,
+    "format": "{icon}",
+    "format-icons": {
+      "locked": " Caps ",
+      "unlocked": ""
+    }
+  },
+
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
+  },
+
+  "tray": {
+    "icon-size": 20,
+    "spacing": 10
+  },
+
+  "clock": {
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format-alt": "{:%d-%m-%Y}",
+    "format": "{:%I:%M %p}"
+  },
+
+
+"battery#BAT0": {
+  "bat": "BAT0",
+  "interval": 10,
+  "format": "B0:{capacity}% {icon}",
+  "format-icons": ["","","","",""],
+  "states": { "warning": 30, "critical": 10 }
+},
+
+"battery#BAT1": {
+  "bat": "BAT1",
+  "interval": 10,
+  "format": "B1:{capacity}% {icon}",
+  "format-icons": ["","","","",""],
+  "states": { "warning": 30, "critical": 10 }
+},
+
+  "backlight": {
+    "device": "acpi_video0",
+    "tooltip": false,
+    "format": "{percent}% {icon}",
+    "format-icons": ["", ""],
+    "on-scroll-up": "brightnessctl s +5%",
+    "on-scroll-down": "brightnessctl s 5%-"
+  },
+
+  "pulseaudio": {
+    "format": "{volume}% {icon}",
+    "tooltip": false,
+    "format-bluetooth": "{volume}% {icon}",
+    "format-bluetooth-muted": "{icon} {format_source}",
+    "format-muted": " {format_source}",
+    "format-source": "",
+    "format-source-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""]
+    },
+    "on-click": "bash ~/.config/waybar/scripts/nowplaying.sh >/dev/null 2>&1 &",
+    "on-click-right": "pavucontrol"
+  },
+
+  "group/group-tools": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "other-apps",
+      "transition-left-to-right": false
+    },
+    "modules": [
+      "custom/snip",
+      "idle_inhibitor",
+      "custom/clip",
+      "custom/galculator",
+      "custom/taskmanager"
+    ]
+  },
+
+
+  "custom/launcher": {
+    "format": "",
+    "tooltip": true,
+    "tooltip-format": "Menu\nRight click to change theme",
+    "on-click": "killall wofi 2>/dev/null || wofi --show drun",
+
+  },
+
+  "custom/chrome": {
+    "format": "",
+    "tooltip": true,
+    "tooltip-format": "Browser",
+    "on-click": "librewolf"
+  },
+
+  "custom/terminal": {
+    "format": "",
+    "tooltip": true,
+    "tooltip-format": "Terminal",
+    "on-click": "foot"
+  },
+
+  "custom/code": {
+    "format": "",
+    "tooltip": true,
+    "tooltip-format": "Code Editor",
+    "on-click": "emacs"
+  },
+
+  "custom/thunar": {
+    "format": "",
+    "tooltip": true,
+    "tooltip-format": "File Manager",
+    "on-click": "thunar"
+  },
+
+  "custom/snip": {
+    "format": "",
+    "tooltip": true,
+    "tooltip-format": "Screenshot",
+    "on-click": "grim -g \"$(slurp)\" ~/scshots/$(date +%s).png"
+  }
+}

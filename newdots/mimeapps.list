@@ -1,0 +1,19 @@
+[Default Applications]
+x-scheme-handler/tg=userapp-AyuGram Desktop-6G64E3.desktop
+x-scheme-handler/tonsite=userapp-AyuGram Desktop-HNI7E3.desktop
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=startcenter.desktop
+application/vnd.openxmlformats-officedocument.presentationml.presentation=impress.desktop
+image/vnd.djvu+multipage=librewolf.desktop
+application/x-shellscript=emacs.desktop
+text/html=emacs.desktop
+application/pdf=librewolf.desktop
+
+[Added Associations]
+x-scheme-handler/tg=userapp-AyuGram Desktop-6G64E3.desktop;
+x-scheme-handler/tonsite=userapp-AyuGram Desktop-HNI7E3.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=startcenter.desktop;
+application/vnd.openxmlformats-officedocument.presentationml.presentation=impress.desktop;
+image/vnd.djvu+multipage=librewolf.desktop;
+application/x-shellscript=emacs.desktop;
+text/html=emacs.desktop;
+application/pdf=librewolf.desktop;
