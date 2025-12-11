@@ -1,9 +1,0 @@
-configuration {
-    modi: "drun";
-    show-icons: true;
-    font: "Segoe UI 11";
-    drun-display-format: "{name}";
-    icon-theme: "Papirus";
-}
-
-@theme "Windows10"
