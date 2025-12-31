@@ -1,0 +1,203 @@
+/* --- Цвета --- */
+@define-color glass_bg        rgba(255,255,255,0.25);
+@define-color glass_bg_strong rgba(255,255,255,0.45);
+@define-color glass_border    rgba(0,0,0,0.18);
+@define-color glass_highlight rgba(255,255,255,0.9);
+
+@define-color fg_main         #000000;
+@define-color fg_dim          #3a3a3a;
+@define-color bg_base         #1c1c1c;
+
+/* --- Очистка всех box и label для предотвращения кривых артефактов --- */
+box, label {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+}
+
+/* --- Окна --- */
+window {
+    background-color: @glass_bg;
+    border-radius: 12px;
+    border: 1px solid @glass_border;
+}
+
+/* --- Headerbar --- */
+headerbar {
+    background-image: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.35),
+        rgba(255,255,255,0.15)
+    );
+    border-bottom: 1px solid @glass_border;
+    box-shadow:
+        inset 0 1px rgba(255,255,255,0.7),
+        0 4px 12px rgba(0,0,0,0.25);
+    border-radius: 12px;
+}
+
+/* --- Кнопки --- */
+button {
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.3);
+    background-color: rgba(200,230,255,0.25);
+    background-image:
+        linear-gradient(to bottom,
+            rgba(255,255,255,0.8) 0%,
+            rgba(255,255,255,0.4) 40%,
+            rgba(255,255,255,0.1) 60%,
+            rgba(220,240,255,0.3) 100%);
+    padding: 10px 20px;
+    color: @fg_main;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(255,255,255,0.9);
+    box-shadow:
+        inset 0 2px 4px rgba(255,255,255,0.6),
+        inset 0 -1px 2px rgba(255,255,255,0.3),
+        0 8px 16px rgba(0,0,0,0.3),
+        0 16px 32px rgba(0,0,0,0.2);
+    transition: all 100ms ease;
+    backdrop-filter: blur(4px);
+}
+
+button:hover {
+    background-color: rgba(220,240,255,0.4);
+    background-image:
+        linear-gradient(to bottom,
+            rgba(255,255,255,0.95),
+            rgba(255,255,255,0.6) 40%,
+            rgba(255,255,255,0.3) 60%,
+            rgba(230,245,255,0.5));
+    box-shadow:
+        inset 0 3px 6px rgba(255,255,255,0.8),
+        inset 0 -1px 2px rgba(255,255,255,0.4),
+        0 10px 20px rgba(0,0,0,0.35),
+        0 20px 40px rgba(0,0,0,0.25);
+    transform: translateY(-3px);
+}
+
+button:active {
+    background-image: linear-gradient(to top,
+        rgba(255,255,255,0.6),
+        rgba(255,255,255,0.3));
+    box-shadow: inset 0 6px 12px rgba(0,0,0,0.4);
+    transform: translateY(4px);
+}
+
+/* --- Текст внутри кнопки --- */
+button label {
+    color: #000000;
+    text-shadow: 0 1px rgba(255,255,255,0.3);
+    background-color: transparent;
+    box-shadow: none;
+}
+
+/* --- Поля ввода --- */
+entry {
+    background-color: rgba(255,255,255,0.2);
+    border: 1px solid @glass_border;
+    border-radius: 10px;
+    padding: 6px;
+    color: @fg_main;
+}
+
+entry:focus {
+    background-color: rgba(255,255,255,0.45);
+    border-color: rgba(0,0,0,0.25);
+    box-shadow:
+        inset 0 1px rgba(255,255,255,0.8),
+        0 0 0 1px rgba(0,0,0,0.1);
+}
+
+/* --- Treeview / списки --- */
+treeview {
+    background-color: rgba(255,255,255,0.15);
+    border-radius: 10px;
+}
+
+treeview:selected {
+    background-color: rgba(255,255,255,0.25);
+}
+
+/* --- Scrollbars --- */
+scrollbar {
+    background-color: transparent;
+}
+
+scrollbar slider {
+    background-color: rgba(0,0,0,0.25);
+    border-radius: 12px;
+}
+
+scrollbar slider:hover {
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* --- Tooltips --- */
+tooltip {
+    background-color: rgba(255,255,255,0.45);
+    color: @fg_main;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 4px 8px;
+}
+
+/* --- Combobox и меню --- */
+combobox, combobox box, combobox label,
+menu, menuitem, menu label {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+}
+
+combobox:selected, menuitem:selected {
+    background-color: rgba(255,255,255,0.25);
+}
+
+/* --- для wofi  так можно же ?  --- */
+menu, combobox {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+menuitem {
+    background-color: rgba(200,230,255,0.25);
+    background-image: linear-gradient(to bottom,
+        rgba(255,255,255,0.8) 0%,
+        rgba(255,255,255,0.4) 40%,
+        rgba(255,255,255,0.1) 60%,
+        rgba(220,240,255,0.3) 100%);
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.3);
+    margin: 6px 10px;
+    padding: 10px 16px;
+    box-shadow:
+        inset 0 2px 4px rgba(255,255,255,0.6),
+        inset 0 -1px 2px rgba(255,255,255,0.3),
+        0 8px 16px rgba(0,0,0,0.3),
+        0 16px 32px rgba(0,0,0,0.2);
+    transition: all 150ms ease;
+}
+
+menuitem:hover {
+    background-color: rgba(220,240,255,0.4);
+    background-image: linear-gradient(to bottom,
+        rgba(255,255,255,0.95),
+        rgba(255,255,255,0.6) 40%,
+        rgba(255,255,255,0.3) 60%,
+        rgba(230,245,255,0.5));
+    box-shadow:
+        inset 0 3px 6px rgba(255,255,255,0.8),
+        inset 0 -1px 2px rgba(255,255,255,0.4),
+        0 10px 20px rgba(0,0,0,0.35),
+        0 20px 40px rgba(0,0,0,0.25);
+}
+
+menuitem:selected {
+    background-color: rgba(220,240,255,0.4);
+    background-image: linear-gradient(to top,
+        rgba(255,255,255,0.6),
+        rgba(255,255,255,0.3));
+    box-shadow: inset 0 6px 12px rgba(0,0,0,0.4);
+}

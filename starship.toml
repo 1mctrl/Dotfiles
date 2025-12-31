@@ -1,0 +1,82 @@
+# ================= LEFT =================
+format = """
+$shell\
+$username\
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$python\
+$rust\
+$golang\
+$java\
+$time
+$character
+"""
+
+# ================= SHELL =================
+[shell]
+disabled = false
+format = "  [$indicator]($style) "
+style = "blue"
+
+# ================= USER =================
+[username]
+show_always = true
+format = "[$user]($style) "
+style_user = "bold white"
+style_root = "white"
+
+# ================= DIRECTORY =================
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+format = "[$path]($style) "
+style = "gray"
+
+# ================= PROMPT SYMBOL =================
+[character]
+success_symbol = "(bold white) "
+error_symbol = "(red) "
+
+# ================= GIT =================
+[git_branch]
+symbol = " "
+format = "[$symbol$branch]($style) "
+style = "blue"
+
+[git_status]
+format = "[$all_status$ahead_behind]($style) "
+style = "red"
+
+# ================= LANGUAGES =================
+[nodejs]
+format = " 󰎙 [$version]($style) "
+style = "gray"
+
+[python]
+format = "  [$version]($style) "
+style = "gray"
+
+[rust]
+format = "  [$version]($style) "
+style = "gray"
+
+[golang]
+format = "  [$version]($style) "
+style = "gray"
+
+[java]
+format = "  [$version]($style) "
+style = "gray"
+
+[c]
+format = "  [$version]($style) "
+style = "gray"
+
+# ================= TIME =================
+[time]
+disabled = false
+format = "[$time]($style) "
+time_format = "%H:%M"
+style = "blue"

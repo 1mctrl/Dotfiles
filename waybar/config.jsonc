@@ -130,7 +130,7 @@
   "custom/launcher": {
     "format": "",
     "tooltip": true,
-    "tooltip-format": "Menu\nRight click to change theme",
+    "tooltip-format": "Menu",
     "on-click": "killall wofi 2>/dev/null || wofi --show drun",
 
   },
