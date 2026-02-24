@@ -36,8 +36,8 @@ style = "gray"
 
 # ================= PROMPT SYMBOL =================
 [character]
-success_symbol = "(bold white) "
-error_symbol = "(red) "
+success_symbol = " (bold white) "
+error_symbol = " (red) "
 
 # ================= GIT =================
 [git_branch]
