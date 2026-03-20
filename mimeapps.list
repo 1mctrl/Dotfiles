@@ -1,0 +1,7 @@
+[Default Applications]
+x-scheme-handler/tg=userapp-AyuGram Desktop-DVNIM3.desktop
+x-scheme-handler/tonsite=userapp-AyuGram Desktop-95XIM3.desktop
+
+[Added Associations]
+x-scheme-handler/tg=userapp-AyuGram Desktop-DVNIM3.desktop;
+x-scheme-handler/tonsite=userapp-AyuGram Desktop-95XIM3.desktop;
