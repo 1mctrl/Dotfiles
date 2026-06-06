@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Интерфейсы
-INTERFACES="wlan0 br-c691123d5dee br-44cdd69e8ddb eth0 lo"
+INTERFACES="wlan0 xray0 br-44cdd69e8ddb ygg0 eth0 lo"
 
 STATUS_DIR="$HOME/.config/sway/status/net_multi"
 mkdir -p "$STATUS_DIR"
@@ -70,8 +70,21 @@ while true; do
         fi
     done
 
-    [ -z "$output" ] && output="no active interfaces"
+ping_status=""
+    if [ -f /tmp/nic-beep-last ]; then
+        content=$(cat /tmp/nic-beep-last)
+        ts=$(echo "$content" | awk '{print $NF}')
+        now=$(date +%s)
+        age=$((now - ts))
+        if [ "$age" -lt 6 ]; then
+            info=$(echo "$content" | awk '{$NF=""; sub(/ $/, ""); print}')
+            ping_status="  |  $info"
+        else
+            rm /tmp/nic-beep-last
+        fi
+    fi
 
-    echo "$output"
+    [ -z "$output" ] && output="no active interfaces"
+    echo "$output$ping_status"
     sleep 2
 done

@@ -74,9 +74,3 @@ style = "gray"
 format = "  [$version]($style) "
 style = "gray"
 
-# ================= TIME =================
-[time]
-disabled = false
-format = "[$time]($style) "
-time_format = "%H:%M"
-style = "blue"

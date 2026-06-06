@@ -43,22 +43,30 @@ while true; do
     cpu_temp=$(awk "BEGIN {printf \"%.1f°C\", $cpu_temp_raw/1000}")
 
     # --- CPU usage ---
-    cpu_now=($(awk 'NR==1 {print $2, $4, $5, $6}' /proc/stat))
-    cpu_prev=($(awk 'NR==1 {print $2, $4, $5, $6}' "$STATUS_DIR/.stat"))
+    cpu_now=($(awk 'NR==1 {print $2,$3,$4,$5,$6,$7,$8}' /proc/stat))
+    cpu_prev=($(awk 'NR==1 {print $2,$3,$4,$5,$6,$7,$8}' "$STATUS_DIR/.stat"))
 
-    cpu_active_now=$((cpu_now[0] + cpu_now[1] + cpu_now[3]))
-    cpu_active_prev=$((cpu_prev[0] + cpu_prev[1] + cpu_prev[3]))
+    # idle — это индекс 3 (поле $5 = idle)
+    cpu_idle_now=${cpu_now[3]}
+    cpu_idle_prev=${cpu_prev[3]}
 
-    cpu_idle_now=${cpu_now[2]}
-    cpu_idle_prev=${cpu_prev[2]}
+    # total — сумма всех полей
+    cpu_total_now=0
+    cpu_total_prev=0
+    for v in "${cpu_now[@]}"; do cpu_total_now=$((cpu_total_now + v)); done
+    for v in "${cpu_prev[@]}"; do cpu_total_prev=$((cpu_total_prev + v)); done
 
-    cpu_active=$((cpu_active_now - cpu_active_prev))
-    cpu_idle=$((cpu_idle_now - cpu_idle_prev))
+    cpu_delta_total=$((cpu_total_now - cpu_total_prev))
+    cpu_delta_idle=$((cpu_idle_now - cpu_idle_prev))
 
-    cpu_usage=$(awk "BEGIN {printf \"%.1f\", $cpu_active*100/($cpu_active+$cpu_idle)}")
-    cpu_usage=$(printf "%5s%%" "$cpu_usage")
+    # Защита от деления на ноль
+    if [ "$cpu_delta_total" -le 0 ]; then
+	cpu_usage="  0.0%"
+    else
+	cpu_usage=$(awk "BEGIN {printf \"%5.1f%%\", ($cpu_delta_total - $cpu_delta_idle) * 100 / $cpu_delta_total}")
+    fi
 
-    cp /proc/stat "$STATUS_DIR/.stat"
+    awk 'NR==1' /proc/stat > "$STATUS_DIR/.stat"
 
     echo "| $cpu_usage & $cpu_temp | $ram_pretty | $battery_pretty | $date "
 
