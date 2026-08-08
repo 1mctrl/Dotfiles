@@ -1,27 +1,15 @@
 
-### ---------------------------------------------------------
 ###  0) Environment / portals / services
-### ---------------------------------------------------------
+exec dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_SESSION_DESKTOP DISPLAY
+exec /usr/libexec/xdg-desktop-portal-wlr &
+exec /usr/libexec/xdg-desktop-portal &
 
-# Export session vars for systemd user services (portals, etc.)
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-
-# xdg-desktop-portal stack (order matters less, but keep grouped)
-exec_always --no-startup-id /usr/libexec/xdg-desktop-portal
-exec_always --no-startup-id /usr/libexec/xdg-desktop-portal-wlr
-exec_always --no-startup-id /usr/libexec/xdg-desktop-portal-gtk
 # pipewire
-exec /usr/libexec/pipewire-launcher &
-#xsettings
-exec xsettingsd
-# Bluetooth tray
-#exec_always --no-startup-id blueman-applet
+#exec /usr/libexec/pipewire-launcher &
 # Battery
 exec ~/.local/bin/battery-watch.sh &
 
-### ---------------------------------------------------------
 ###  1) Variables
-### ---------------------------------------------------------
 
 set $mod   Mod4
 
@@ -32,63 +20,49 @@ set $right e
 
 set $term  foot
 
-
-### ---------------------------------------------------------
 ###  2) Outputs / wallpaper
-### ---------------------------------------------------------
 
-output * bg /home/icon/pics/mountain1.jpg fill
+output * bg /home/icon/pics/blue.png fill
 
-
-### ---------------------------------------------------------
 ###  3) Bar
-### ---------------------------------------------------------
 
 #bar {
-#    swaybar_command waybar
+#    position top
+#    status_command ~/.config/sway/status/logs-up.sh
+#    workspace_buttons no
+#    colors {
+#           background       #181818
+#	   statusline       #ffdddd
+#           separator        #444466
+#
+#    }
 #}
+
 bar {
     position bottom
-
     status_command ~/stat/axbr
-    
+    workspace_buttons yes
     colors {
         statusline #ffdddd
-        background #1F2128
+        background #181818
         inactive_workspace #32323200 #32323200 #5c5c5c
     }
 }
 
-bar {
-    position top
-    status_command ~/.config/sway/status/logs-up.sh
-    workspace_buttons no
-    colors {
-           background       #1F2128
-	   statusline       #ffdddd
-           separator        #444466
-
-    }
-}
-### ---------------------------------------------------------
 ###  4) Idle / lock / DPMS / cursor hide
-### ---------------------------------------------------------
+exec swayidle -w \
+    timeout 300 'swaymsg "output * power off"'
 
-#exec swayidle -w \
-#    timeout 500 'swaylock --image /home/icon/pics/wave.png' \
-#    timeout 500 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-#    before-sleep 'swaylock --image /home/icon/pics/wave.png'
+bindsym Print exec swaymsg "output * power on" 
+
 
 seat * hide_cursor 10000
 
-
 xwayland enable
 
-### ---------------------------------------------------------
 ###  7) Colors
-### ---------------------------------------------------------
 
-set $bg-color            #5B6176
+set $bg-color            #696969
 set $inactive-bg-color   #1F2128
 set $text-color          #ffffff
 set $inactive-text-color #777777
@@ -100,10 +74,11 @@ client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-co
 client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color $inactive-bg-color
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color
 
+default_border pixel 1
+default_floating_border pixel 1
 
-### ---------------------------------------------------------
 ###  8) Input (keyboard / touchpad)
-### ---------------------------------------------------------
+
 
 input * {
     xkb_layout us,ru
@@ -117,12 +92,17 @@ input * {
 
 input "2:7:SynPS/2_Synaptics_TouchPad" {
     events disabled
+
+}
+
+input "2:10:TPPS/2_IBM_TrackPoint" {
+    accel_profile flat
+    pointer_accel 1
 }
 
 
-### ---------------------------------------------------------
 ###  9) Core binds (apps / session)
-### ---------------------------------------------------------
+
 
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
@@ -131,12 +111,12 @@ bindsym $mod+Shift+d exec rofi -show run
 
 bindsym $mod+Shift+r reload
 bindsym $mod+Shift+x exec swaynag -t warning -m 'exit sway? ' -B 'Yes' 'swaymsg exit'
-bindsym $mod+Shift+z exec swaylock --image /home/icon/pics/mountain1.jpg
+bindsym $mod+Shift+z exec swaylock
 
 
-### ---------------------------------------------------------
+
 ### 10) Media / brightness keys
-### ---------------------------------------------------------
+
 
 bindsym XF86AudioMute         exec pactl set-sink-mute   @DEFAULT_SINK@ toggle
 bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5%
@@ -147,9 +127,9 @@ bindsym XF86MonBrightnessUp   exec brightnessctl s +5%
 bindsym XF86MonBrightnessDown exec brightnessctl s 5%-
 
 
-### ---------------------------------------------------------
+
 ### 11) Focus / move (hjkl-style + arrows)
-### ---------------------------------------------------------
+
 
 # Focus (your custom keys)
 bindsym $mod+$left  focus left
@@ -176,9 +156,9 @@ bindsym $mod+Shift+Up     move up
 bindsym $mod+Shift+Right  move right
 
 
-### ---------------------------------------------------------
+
 ### 12) Layout / floating / scratchpad
-### ---------------------------------------------------------
+
 
 bindsym $mod+b splith
 bindsym $mod+v splitv
@@ -196,9 +176,9 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 
-### ---------------------------------------------------------
+
 ### 13) Screenshots / recording
-### ---------------------------------------------------------
+
 
 # Toggle wf-recorder (SIGINT if running; else start)
 bindsym $mod+Shift+w exec pkill -INT wf-recorder || \
@@ -213,9 +193,9 @@ bindsym $mod+g exec grim -g "$(slurp)" - | wl-copy --type image/png
 bindsym $mod+Shift+g exec grim -g "$(slurp)"
 
 
-### ---------------------------------------------------------
+
 ### 14) Workspaces (numbers 0..9)
-### ---------------------------------------------------------
+
 
 bindsym $mod+1 workspace number 0
 bindsym $mod+2 workspace number 1
@@ -240,9 +220,9 @@ bindsym $mod+Shift+9 move container to workspace number 8
 bindsym $mod+Shift+0 move container to workspace number 9
 
 
-### ---------------------------------------------------------
+
 ### 15) Resize mode
-### ---------------------------------------------------------
+
 
 mode "resize" {
     bindsym $left  resize shrink width 10px
@@ -262,8 +242,8 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 
-### ---------------------------------------------------------
+
 ### 16) External layered includes
-### ---------------------------------------------------------
+
 
 include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "/etc/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'

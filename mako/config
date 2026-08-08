@@ -1,0 +1,13 @@
+
+on-notify=exec sh -c 'for i in 1 2; do beep -f 120 -l 100; sleep 0.15; done'
+font=GohuFont11 Nerd Font Mono 12
+width=350
+height=100
+margin=10
+padding=10
+border-size=2
+default-timeout=0
+anchor=top-left
+background-color=#222222
+text-color=#eeeeee
+border-color=#3B4D97
